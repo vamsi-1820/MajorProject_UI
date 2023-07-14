@@ -1,0 +1,588 @@
+  <!DOCTYPE html>
+<html>
+    <head>
+        <title>ChitFund</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width,inline-scale-1">
+    </head>
+    <body >
+        <script src='node_modules/web3/dist/web3.min.js'></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" crossorigin="anonymous"></script>
+
+        <table class="header navbar-fixed-top" width="100%" height="10%"style="background-color: black;">
+        <tr style="text-align: center;">
+            <td width="1%">
+            </td>
+            <td width="35%" style="text-align: left;">
+                <h1><a class="heading" href="index.html">ChitFund...</a></h1>
+            </td>
+            <td width="3%"><a class="aa" href="signup.html"><div class="glyphicon glyphicon-user"></div>Signup</a></td>
+            <td width="3%"><a class="aa" href="login.html"><div class="glyphicon glyphicon-log-in"></div> Login</a></td>
+        </tr>
+      </table>
+        <div class="bgimg">
+            <div class="container">
+            <div class="row" style="margin-top: 150px;">
+                <div class="col-xs-3">
+
+                </div>
+                <div class="col-xs-6" >
+                    <div class="panel panel-custom-horrible-black">
+                        <div class="panel-heading">
+                            <h2>Signup</h2>
+                        </div>
+                        <div class="panel-body">
+                            <form>
+                                <div class="class-group">
+                                    <label style="font-weight: bold;">Name</label>
+                                    <input type="text" id="Name" placeholder="Name" class="form-control" required><br>
+                                    <lable style="font-weight: bold;">Email</lable>
+                                    <input type="email" id="Email" placeholder="Email" class="form-control" required><br>
+                                    <lable style="font-weight: bold;">Password</lable>
+                                    <input type="password" id="Password" placeholder="Password"  class="form-control" required><br>
+                                    <lable style="font-weight: bold;">DoB</lable>
+                                    <input type="date" id="DOB" placeholder="DOB" class="form-control" required><br>
+                                    <lable style="font-weight: bold;">Account Number</lable>
+                                    <input type="text" id="Account ID" placeholder="Account ID" class="form-control" required><br>
+                                    <lable style="font-weight: bold;">ChitFund ID</lable>
+                                    <input type="text" id="ChitFund ID" placeholder="ChitFund ID" class="form-control"><br>
+                                    <lable style="font-weight: bold;">Mobile</lable>
+                                    <input type="tel" id="Mobile Number" placeholder="Mobile Number" size="10" class="form-control" required><br>
+                                    <lable style="font-weight: bold;">Address</lable>
+                                    <input type="text" id="Address" placeholder="Address" class="form-control" required><br>
+                                    <lable style="font-weight: bold;">Aadhar</lable>
+                                    <input type="file" id="aadhar" class="form-control" required><br>
+                                    <table>
+                                        <tr>
+                                            <td><button onclick="JoinFund();" class="btn-grad">Register</button></td>
+                                            <td><input type="reset" value="Clear" class="btn-grad"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel-footer">
+                            <p style="color: white;">Already a subscriber? <a class="aa" href="login.html">Sign in</a>.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>  
+        </div>
+        <div Footer>
+            <nav class="navbar-inverse navbar-fixed-bottom">
+            <center>
+                <p style="color: white;"></p>
+            </center>
+            </nav>
+        </div>
+
+        <script type="text/javascript">
+            
+            async function loadWeb3(){
+             if(window.ethereum)
+             {
+                 window.web3 = new Web3(window.ethereum);
+                 window.ethereum.enable();
+             }
+         }
+         async function loadContract(){
+             //Parmeters ABI,Contract Add
+             return await new window.web3.eth.Contract(
+[
+    {
+        "inputs": [],
+        "name": "contribute",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "email",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "password",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "dob",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "accountid",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "mobilenumber",
+                "type": "string"
+            }
+        ],
+        "name": "joinFund",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "releaseFund",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_amount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_installments",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_noOfParticipants",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "creator",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "contributedParticipants",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "currentInstallment",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "currentNoOfContributors",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "fundBalance",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "fundName",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getSummary",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            },
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            },
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "installmentAmount",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "lastWinner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "manager",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "noOfInstallments",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "noOfParticipants",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "noOfParticipantsJoined",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "paidParticipants",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "participants",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "participantsArray",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "participantsToBePaid",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "participantsToBePaidLength",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "status",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "SubscriberIndex",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "Subscribers",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "Name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "Email",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "Password",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "DOB",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "AccountID",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "MobileNumber",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
+,'0x28c118dA3C5200CF0FEbc667B9b7a2f63539B8c7');
+         }
+       
+         async function JoinFund(){
+             const name = document.getElementById("Name").value;
+             const mail = document.getElementById("Email").value;
+             const password = document.getElementById("Password").value;
+             const dob = document.getElementById("DOB").value;
+             const account = document.getElementById("Account ID").value;
+             const mobile = document.getElementById("Mobile Number").value;
+             const address = document.getElementById("Address").value;
+             
+             await window.contract.methods.joinFund(name,mail,password,dob,account,mobile).send({from:account}); // add address
+         }
+         
+         async function load()
+         {
+             await loadWeb3();
+             window.contract = await loadContract();
+         }
+         
+         load();
+
+        </script>
+
+
+    </body>
+</html>
